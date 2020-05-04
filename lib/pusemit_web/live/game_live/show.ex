@@ -18,4 +18,6 @@ defmodule PusemitWeb.GameLive.Show do
 
   defp page_title(:show), do: "Show Game"
   defp page_title(:edit), do: "Edit Game"
+  defp page_title(:add_player), do: "Add player"
+  defp page_title(:add_word), do: "Add word"
 end

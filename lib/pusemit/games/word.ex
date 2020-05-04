@@ -5,13 +5,15 @@ defmodule Pusemit.Games.Word do
   schema "words" do
     field :spelling, :string
 
+    belongs_to :game, Game
+
     timestamps()
   end
 
   @doc false
   def changeset(word, attrs) do
     word
-    |> cast(attrs, [:spelling])
-    |> validate_required([:spelling])
+    |> cast(attrs, [:spelling, :game_id])
+    |> validate_required([:spelling, :game_id])
   end
 end

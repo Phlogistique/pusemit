@@ -3,13 +3,21 @@ defmodule Pusemit.Repo.Migrations.CreateGames do
 
   def change do
     create table(:games) do
-      add :players, references(:players, on_delete: :nothing)
-      add :words, references(:words, on_delete: :nothing)
+      timestamps()
+    end
+
+    create table(:words) do
+      add :spelling, :string
+      add :game_id, references(:games, on_delete: :delete_all), null: false
 
       timestamps()
     end
 
-    create index(:games, [:players])
-    create index(:games, [:words])
+    create table(:players) do
+      add :name, :string
+      add :game_id, references(:games, on_delete: :delete_all), null: false
+
+      timestamps()
+    end
   end
 end

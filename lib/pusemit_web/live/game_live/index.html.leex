@@ -12,13 +12,15 @@
 <table>
   <thead>
     <tr>
-
-      <th></th>
+      <th>ID</th>
+      <th>Name</th>
     </tr>
   </thead>
   <tbody id="games">
     <%= for game <- @games do %>
       <tr id="game-<%= game.id %>">
+        <td><%= game.id %></td>
+        <td><%= game.name %></td>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.game_show_path(@socket, :show, game) %></span>

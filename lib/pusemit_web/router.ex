@@ -18,6 +18,15 @@ defmodule PusemitWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+
+    live "/games", GameLive.Index, :index
+    live "/games/new", GameLive.Index, :new
+    live "/games/:id/edit", GameLive.Index, :edit
+
+    live "/games/:id", GameLive.Show, :show
+    live "/games/:id/show/edit", GameLive.Show, :edit
+    live "/games/:id/show/add_player", GameLive.Show, :add_player
+    live "/games/:id/show/add_word", GameLive.Show, :add_word
   end
 
   # Other scopes may use custom stacks.

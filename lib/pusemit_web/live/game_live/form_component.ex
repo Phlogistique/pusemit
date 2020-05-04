@@ -5,6 +5,7 @@ defmodule PusemitWeb.GameLive.FormComponent do
 
   @impl true
   def update(%{game: game} = assigns, socket) do
+    IO.puts("update")
     changeset = Games.change_game(game)
 
     {:ok,
@@ -15,6 +16,8 @@ defmodule PusemitWeb.GameLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"game" => game_params}, socket) do
+    IO.puts("validate")
+
     changeset =
       socket.assigns.game
       |> Games.change_game(game_params)
@@ -24,6 +27,7 @@ defmodule PusemitWeb.GameLive.FormComponent do
   end
 
   def handle_event("save", %{"game" => game_params}, socket) do
+    IO.puts("handle save")
     save_game(socket, socket.assigns.action, game_params)
   end
 
@@ -41,6 +45,8 @@ defmodule PusemitWeb.GameLive.FormComponent do
   end
 
   defp save_game(socket, :new, game_params) do
+    IO.puts("Save game")
+
     case Games.create_game(game_params) do
       {:ok, _game} ->
         {:noreply,

@@ -1,17 +1,45 @@
 <h1>Show Game</h1>
 
-<%= if @live_action in [:edit] do %>
-  <%= live_modal @socket, PusemitWeb.GameLive.FormComponent,
-    id: @game.id,
-    title: @page_title,
-    action: @live_action,
-    game: @game,
-    return_to: Routes.game_show_path(@socket, :show, @game) %>
+<%= case @live_action do %>
+  <% :edit -> %>
+    <%= live_modal @socket, PusemitWeb.GameLive.FormComponent,
+      id: @game.id,
+      title: @page_title,
+      action: @live_action,
+      game: @game,
+      return_to: Routes.game_show_path(@socket, :show, @game) %>
+  <% :add_player -> %>
+    <%= live_modal @socket, PusemitWeb.GameLive.AddPlayerComponent,
+      id: @game.id,
+      game: @game,
+      return_to: Routes.game_show_path(@socket, :show, @game) %>
+  <% :add_word-> %>
+    <%= live_modal @socket, PusemitWeb.GameLive.AddWordComponent,
+      id: @game.id,
+      game: @game,
+      return_to: Routes.game_show_path(@socket, :show, @game) %>
+  <% _ -> %>
 <% end %>
 
 <ul>
-
+  <li>Name: <%= @game.name %></li>
+  <li>Players:
+    <ul>
+      <%= for player <- @game.players do %>
+        <li><%= player.name %></li>
+      <% end %>
+    </ul>
+  </li>
+  <li>Words:
+    <ul>
+      <%= for word <- @game.words do %>
+        <li><%= word.spelling %></li>
+      <% end %>
+    </ul>
+  </li>
 </ul>
 
+<span><%= live_patch "Add player", to: Routes.game_show_path(@socket, :add_player, @game), class: "button" %></span>
+<span><%= live_patch "Add word", to: Routes.game_show_path(@socket, :add_word, @game), class: "button" %></span>
 <span><%= live_patch "Edit", to: Routes.game_show_path(@socket, :edit, @game), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.game_index_path(@socket, :index) %></span>

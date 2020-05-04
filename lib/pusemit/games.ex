@@ -35,7 +35,7 @@ defmodule Pusemit.Games do
       ** (Ecto.NoResultsError)
 
   """
-  def get_game!(id), do: Repo.get!(Game, id)
+  def get_game!(id), do: Game |> Repo.get!(id) |> Repo.preload(:players) |> Repo.preload(:words)
 
   @doc """
   Creates a game.
